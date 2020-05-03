@@ -39,12 +39,18 @@
             <p>{{ commentForm.value | json }}</p>
             <mat-form-field>
                 <input matInput formControlName="author" placeholder="Name" type="text">
+                <mat-error *ngIf="commentForm.get('author').hasError('required') &&
+                commentForm.get('author').touched">This field is required</mat-error>
             </mat-form-field>
-            <mat-slider class="half-width" min="1" max="5" step="1" value="2" thumbLabel=true tickInterval="1" formControlName="rating"></mat-slider>
+            <mat-slider class="half-width" min="1" max="5" step="1" value="2" thumbLabel=true tickInterval="1"
+                formControlName="rating"></mat-slider>
             <mat-form-field>
                 <textarea matInput formControlName="comment" placeholder="Your comment" type="text"></textarea>
+                <mat-error *ngIf="commentForm.get('comment').hasError('required') &&
+                commentForm.get('comment').touched">This field is required</mat-error>
             </mat-form-field>
-            <button [disabled]="cform.form.invalid" type="submit" mat-button class="background-primary text-floral-white">Submit</button>
+            <button [disabled]="cform.form.invalid" type="submit" mat-button
+                class="background-primary text-floral-white">Submit</button>
         </form>
 
 
