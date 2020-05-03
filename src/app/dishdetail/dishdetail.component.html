@@ -32,11 +32,15 @@
                 <p mat-line>{{c.rating}} Stars</p>
                 <p mat-line><span>-- {{c.author}} {{c.date | date}}</span></p>
             </mat-list-item>
+            <mat-list-item *ngIf="commentForm.valid">
+                <h3 mat-line>{{commentForm.value.comment}}</h3>
+                <p mat-line>{{commentForm.value.rating}} Stars</p>
+                <p mat-line><span>-- {{commentForm.value.author}} {{commentForm.value.date | date}}</span></p>
+            </mat-list-item>
         </mat-list>
 
 
         <form novalidate [formGroup]="commentForm" #cform="ngForm" (ngSubmit)="onSubmit()" fxLayout="column">
-            <p>{{ commentForm.value | json }}</p>
             <mat-form-field>
                 <input matInput formControlName="author" placeholder="Name" type="text">
                 <mat-error *ngIf="formErrors.author">{{formErrors.author}}</mat-error>

@@ -81,6 +81,8 @@ export class DishdetailComponent implements OnInit {
       rating: 5,
       comment: ''
     })
+    this.comment.date = Date.now().toString();
+    this.dish.comments.push(this.comment);
     // this.commentFormDirective.resetForm();
   }
   onValueChanged(data?: any) {
@@ -89,7 +91,6 @@ export class DishdetailComponent implements OnInit {
     const form = this.commentForm;
     for (const field in this.formErrors) {
       if (this.formErrors.hasOwnProperty(field)) {
-        // clear previous error message (if any)
         this.formErrors[field] = '';
         const control = form.get(field);
         if (control && control.dirty && !control.valid) {
