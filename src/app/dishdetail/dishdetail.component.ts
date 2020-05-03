@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Params, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common'; //track location of page in browser
 import { Dish } from "../shared/dish";
+import {Comment} from "../shared/comment";
 import { DishService } from "../services/dish.service";
 import { switchMap } from 'rxjs/operators';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-dishdetail',
@@ -16,8 +18,14 @@ export class DishdetailComponent implements OnInit {
   dishIds: string[];
   prev: string;
   next: string;
+  comment: Comment;
+  commentForm: FormGroup;
+  @ViewChild('cform') commentFormDirective;
 
-  constructor(private dishService: DishService, private route: ActivatedRoute, private location: Location) { }
+  constructor(private dishService: DishService, private route: ActivatedRoute,
+     private location: Location, private formBuilder: FormBuilder) { 
+       this.createForm();
+     }
 
   ngOnInit(): void {
     this.dishService.getDishIds()
@@ -36,6 +44,24 @@ export class DishdetailComponent implements OnInit {
 
   goBack(): void {
     this.location.back()
+  }
+
+  createForm(): void{
+    this.commentForm = this.formBuilder.group({
+      author: '',
+      rating: 5,
+      comment: ''
+    })
+  }
+
+  onSubmit() : void{
+    this.comment = this.commentForm.value;
+    this.commentForm.reset({
+      author: '',
+      rating: 5,
+      comment: ''
+    })
+    // this.commentFormDirective.resetForm();
   }
 
 }
