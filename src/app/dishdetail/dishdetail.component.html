@@ -40,11 +40,11 @@
             <mat-form-field>
                 <input matInput formControlName="author" placeholder="Name" type="text">
             </mat-form-field>
-            <mat-slider min="1" max="5" step="1" value="2" thumbLabel=true tickInterval="1" formControlName="rating"></mat-slider>
+            <mat-slider class="half-width" min="1" max="5" step="1" value="2" thumbLabel=true tickInterval="1" formControlName="rating"></mat-slider>
             <mat-form-field>
                 <textarea matInput formControlName="comment" placeholder="Your comment" type="text"></textarea>
             </mat-form-field>
-            <button type="submit" mat-button class="background-primary text-floral-white">Submit</button>
+            <button [disabled]="cform.form.invalid" type="submit" mat-button class="background-primary text-floral-white">Submit</button>
         </form>
 
 

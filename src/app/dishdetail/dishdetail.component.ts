@@ -48,9 +48,9 @@ export class DishdetailComponent implements OnInit {
 
   createForm(): void{
     this.commentForm = this.formBuilder.group({
-      author: '',
+      author: ['', [Validators.required, Validators.minLength(2)]],
       rating: 5,
-      comment: ''
+      comment: ['', [Validators.required]]
     })
   }
 
