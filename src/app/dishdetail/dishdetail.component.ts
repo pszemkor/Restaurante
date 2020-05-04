@@ -6,6 +6,7 @@ import { Comment } from "../shared/comment";
 import { DishService } from "../services/dish.service";
 import { switchMap } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { error } from 'protractor';
 
 @Component({
   selector: 'app-dishdetail',
@@ -22,6 +23,9 @@ export class DishdetailComponent implements OnInit {
   commentForm: FormGroup;
   @ViewChild('cform') commentFormDirective;
   BaseURL: string;
+  errorMessage: string;
+  dishcopy: Dish;
+
 
   formErrors = {
     'author': '',
@@ -43,6 +47,7 @@ export class DishdetailComponent implements OnInit {
     private location: Location,
     private formBuilder: FormBuilder,
     @Inject('BaseURL') BaseURL) {
+    this.BaseURL = BaseURL;
     this.createForm();
   }
 
@@ -51,7 +56,8 @@ export class DishdetailComponent implements OnInit {
       .subscribe(ids => this.dishIds = ids);
     this.route.params
       .pipe(switchMap(params => this.dishService.getDish(params['id'])))
-      .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); });
+      .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); },
+        error => this.errorMessage = <any>error);
   }
 
   setPrevNext(id: string) {
@@ -86,8 +92,11 @@ export class DishdetailComponent implements OnInit {
       comment: ''
     })
     this.comment.date = Date.now().toString();
-    this.dish.comments.push(this.comment);
-    // this.commentFormDirective.resetForm();
+    this.dishcopy.comments.push(this.comment);
+    this.dishService.putDish(this.dishcopy)
+      .subscribe(dish => { this.dish = dish; this.dishcopy = dish },
+        error => {this.errorMessage = <any>error; this.dish = this.dishcopy = null});
+    this.commentFormDirective.resetForm();
   }
   onValueChanged(data?: any) {
     if (!this.commentForm) return;
