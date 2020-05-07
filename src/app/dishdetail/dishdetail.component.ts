@@ -6,12 +6,17 @@ import { Comment } from "../shared/comment";
 import { DishService } from "../services/dish.service";
 import { switchMap } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { error } from 'protractor';
+import { visibility, flyInOut, expand } from '../animations/app.animations';
 
 @Component({
   selector: 'app-dishdetail',
   templateUrl: './dishdetail.component.html',
-  styleUrls: ['./dishdetail.component.scss']
+  animations: [visibility(), flyInOut(), expand()],
+  styleUrls: ['./dishdetail.component.scss'],
+  host: {
+    '[@flyInOut]': 'true',
+    'style': 'display: block;'
+  },
 })
 export class DishdetailComponent implements OnInit {
 
@@ -25,6 +30,7 @@ export class DishdetailComponent implements OnInit {
   BaseURL: string;
   errorMessage: string;
   dishcopy: Dish;
+  visibility = 'shown';
 
 
   formErrors = {
@@ -55,8 +61,8 @@ export class DishdetailComponent implements OnInit {
     this.dishService.getDishIds()
       .subscribe(ids => this.dishIds = ids);
     this.route.params
-      .pipe(switchMap(params => this.dishService.getDish(params['id'])))
-      .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); },
+      .pipe(switchMap((params: Params) => { this.visibility = 'hidden'; return this.dishService.getDish(params['id']); }))
+      .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); this.visibility = 'shown'; },
         error => this.errorMessage = <any>error);
   }
 
@@ -95,9 +101,10 @@ export class DishdetailComponent implements OnInit {
     this.dishcopy.comments.push(this.comment);
     this.dishService.putDish(this.dishcopy)
       .subscribe(dish => { this.dish = dish; this.dishcopy = dish },
-        error => {this.errorMessage = <any>error; this.dish = this.dishcopy = null});
+        error => { this.errorMessage = <any>error; this.dish = this.dishcopy = null });
     this.commentFormDirective.resetForm();
   }
+
   onValueChanged(data?: any) {
     if (!this.commentForm) return;
 
