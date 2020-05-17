@@ -106,7 +106,7 @@ export class ContactComponent implements OnInit {
       this.resultFeedback = <Feedback>feedback;
         setTimeout(() => {
           this.feedback = null; this.resultFeedback = null;
-        }, 3000)
+        }, 5000)
       },
         error => { this.errorMessage = <any>error; this.feedback = null; this.resultFeedback = null });
 
