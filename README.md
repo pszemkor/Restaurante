@@ -21,3 +21,15 @@ Run `json-server --watch db.json`.
 ## Distribution
 
 Run `ng build --prod` to create 'dist' folder. Generated folder can be moved to json-server/public and run on http://localhost:3000/ if server is running.
+
+## App:
+
+#### Home:
+![home](https://user-images.githubusercontent.com/37248877/82152026-fdc33d00-985e-11ea-8a45-0a6c182ce2a5.jpg)
+
+#### Dish details: 
+![image](https://user-images.githubusercontent.com/37248877/82151307-411bac80-985b-11ea-801f-466c7b6f8dfc.jpg)
+
+#### Feedback:
+![feedback](https://user-images.githubusercontent.com/37248877/82151346-66a8b600-985b-11ea-9885-d073fcfe397f.png)
+
