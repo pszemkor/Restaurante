@@ -21,7 +21,3 @@ Run `json-server --watch db.json`.
 ## Distribution
 
 Run `ng build --prod` to create 'dist' folder. Generated folder can be moved to json-server/public and run on http://localhost:3000/ if server is running.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
