@@ -33,11 +33,9 @@
     </div>
 
 
-    <div fxFlex fxFlexOffset="20px" class="form-size">
+    <div fxFlex fxFlexOffset="20px" class="form-size" >
         <h3>Send us your Feedback</h3>
-        <p>{{ feedbackForm.value | json }} {{ feedbackForm.status | json }}</p>
-
-        <form novalidate [formGroup]="feedbackForm" #fform="ngForm" (ngSubmit)="onSubmit()">
+        <form *ngIf="feedback==null" novalidate [formGroup]="feedbackForm" #fform="ngForm" (ngSubmit)="onSubmit()">
             <p>
                 <mat-form-field class="half-width">
                     <input matInput formControlName="firstname" placeholder="First Name" type="text" required>
@@ -76,7 +74,48 @@
                     <textarea matInput formControlName="message" placeholder="Your Feedback" rows=12></textarea>
                 </mat-form-field>
             </p>
-            <button [disabled]="fform.form.invalid" type="submit" mat-button class="background-primary text-floral-white">Submit</button>
+            <button [disabled]="fform.form.invalid" type="submit" mat-button
+                class="background-primary text-floral-white">Submit</button>
         </form>
+    </div>
+    
+    <div [hidden]="feedback == null || errorMessage || resultFeedback">
+        <mat-spinner></mat-spinner>
+        <h4>Loading . . . Please Wait</h4>
+    </div>
+
+    <div *ngIf="resultFeedback" >
+        <mat-card fxFlex fxFlexOffset="20px" class="form-size">
+            <mat-card-header>
+                <mat-card-title>
+                    <h3>Your submission</h3>
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-list>
+                    <mat-list-item>
+                        <h4 mat-line>First name: {{resultFeedback.firstname}}</h4>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <h4 mat-line>Last name: {{resultFeedback.lastname}}</h4>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <h4 mat-line>Tel. number: {{resultFeedback.telnum}}</h4>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <p mat-line>Email: {{resultFeedback.email}}</p>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <p mat-line>Contact You?: {{resultFeedback.agree}}</p>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <p mat-line>How?: {{resultFeedback.contacttype}}</p>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <p mat-line>Feedback: {{resultFeedback.message}}</p>
+                    </mat-list-item>
+                </mat-list>
+            </mat-card-content>
+        </mat-card>
     </div>
 </div>
