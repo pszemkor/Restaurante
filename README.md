@@ -17,6 +17,7 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 ## Run json-server
 
 Run `json-server --watch db.json`.
+Json server is responsible for storing feedbacks, comments, dishes etc.
 
 ## Distribution
 
